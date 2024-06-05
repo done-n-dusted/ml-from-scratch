@@ -24,14 +24,13 @@ if args.type == 'classification':
     plt.show()
 
 if args.type == 'regression':
-    diabetes = datasets.load_diabetes()
 
-    X, y = diabetes.data, diabetes.target
+    X, y = datasets.make_regression(n_samples=10000, n_features=1, noise=20, random_state=4)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
 
     plt.figure()
-    plt.title("Diabetes Dataset, regression example")
-    plt.scatter(X[:, 2], y, color="black")
+    plt.title("Random Dataset, regression example")
+    plt.scatter(X, y, color="black")
     plt.show()
 
 if args.model == "knn":
@@ -48,3 +47,10 @@ if args.model == "linear-regression":
     predictions = reg.predict(X_test)
 
     print(np.sqrt(np.mean((predictions - y_test) ** 2)))
+
+    plt.figure()
+    ypredline = reg.predict(X)
+    plt.title("Linear Regression")
+    plt.scatter(X_test, y_test, color="black", label="Test data")
+    plt.plot(X, ypredline, color="blue", linewidth=3, label="Prediction")
+    plt.show()
