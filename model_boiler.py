@@ -2,6 +2,7 @@ import numpy as np
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+import argparse
 
 from knearest import KNN
 
@@ -14,10 +15,14 @@ plt.figure()
 plt.scatter(X[:, 2], X[:, 3], c=y, cmap=plt.cm.Set1, edgecolor="k")
 plt.show()
 
-clf = KNN(k=3)
-clf.fit(X_train, y_train)
-predictions = clf.predict(X_test)
-print(predictions)
+parser = argparse.ArgumentParser()
+parser.add_argument("--model", type=str, help="Name of the model")
+args = parser.parse_args()
 
-acc = np.sum(predictions == y_test) / len(y_test)
-print(acc)
+if args.model == "knn":
+    clf = KNN(k=3)
+    clf.fit(X_train, y_train)
+    predictions = clf.predict(X_test)
+    print(predictions)
+    acc = np.sum(predictions == y_test) / len(y_test)
+    print(acc)
